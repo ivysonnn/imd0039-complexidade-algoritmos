@@ -15,6 +15,7 @@ set(source_dir "${PROJECT_SOURCE_DIR}")
 set(SOURCES 
     ${source_dir}/src/main.cpp
     ${source_dir}/src/binary_search.cpp
+    ${source_dir}/src/quicksort.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
