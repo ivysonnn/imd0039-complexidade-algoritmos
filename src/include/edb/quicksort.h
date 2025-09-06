@@ -5,8 +5,8 @@
 
 namespace edb
 {
-  namespace sort
-  {
-    void quicksort(std::vector<int> arr);
-  }
+    namespace sort
+    {
+        void quicksort(std::vector<int> arr);
+    }
 }
