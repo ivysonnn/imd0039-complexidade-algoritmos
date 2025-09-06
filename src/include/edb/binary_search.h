@@ -7,6 +7,6 @@ namespace edb
 {
   namespace search
   {
-    int binary_search(std::vector<int> arr, int key);
+    int binary_search(const std::vector<int>& arr, int key);
   } 
 }
