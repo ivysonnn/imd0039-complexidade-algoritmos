@@ -22,7 +22,7 @@ execute_process(
 
 add_library(edb INTERFACE)
 target_include_directories(edb INTERFACE
-  ${PROJECT_SOURCE_DIR}/src/include/
+  ${PROJECT_SOURCE_DIR}/include/
   ${PROJECT_SOURCE_DIR}/lib/include/
   ${Python3_INCLUDE_DIRS} 
 )
