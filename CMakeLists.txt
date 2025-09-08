@@ -33,6 +33,7 @@ set(SOURCES
     ${source_dir}/src/binary_search.cpp
     ${source_dir}/src/quicksort.cpp
     ${source_dir}/src/usage.cpp
+    ${source_dir}/src/analysis.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
