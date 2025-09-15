@@ -64,8 +64,9 @@ Exemplos:
 ```
 
 ## 👨‍💻 Alunos
-Chistian Daniel - **[github](https://github.com/ChistianDPSilva)**
-Ivyson Lucas - **[github](https://github.com/ivysonnn)**
+Chistian Daniel - **[@ChistianDPSilva](https://github.com/ChistianDPSilva)**
+
+Ivyson Lucas - **[@ivysonnn](https://github.com/ivysonnn)**
 
 ## Liscença
 
