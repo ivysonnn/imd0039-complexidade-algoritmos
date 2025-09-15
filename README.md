@@ -68,6 +68,6 @@ Chistian Daniel - **[@ChistianDPSilva](https://github.com/ChistianDPSilva)**
 
 Ivyson Lucas - **[@ivysonnn](https://github.com/ivysonnn)**
 
-## Liscença
+## Licença
 
 MIT License - **[LICENSE](https://github.com/ivysonnn/imd0039-complexidade-algoritmos/blob/main/LICENSE)**
