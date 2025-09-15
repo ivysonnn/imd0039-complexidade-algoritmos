@@ -23,6 +23,7 @@ execute_process(
 add_library(edb INTERFACE)
 target_include_directories(edb INTERFACE
   ${PROJECT_SOURCE_DIR}/include/
+  ${PROJECT_SOURCE_DIR}/include/cli/
   ${PROJECT_SOURCE_DIR}/lib/include/
   ${Python3_INCLUDE_DIRS} 
 )
@@ -32,8 +33,10 @@ set(SOURCES
     ${source_dir}/src/main.cpp
     ${source_dir}/src/binary_search.cpp
     ${source_dir}/src/quicksort.cpp
-    ${source_dir}/src/usage.cpp
+    ${source_dir}/src/bubblesort.cpp
+    ${source_dir}/src/sequencial_search.cpp
     ${source_dir}/src/analysis.cpp
+    ${source_dir}/src/usage.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
