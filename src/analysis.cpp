@@ -1,0 +1,74 @@
+#include <edb/analysis.h>
+
+#define RES_PATH "../results/"
+
+
+
+void edb::run_analysis(std::string& algorithm_name)
+{
+    std::string filename = algorithm_name + "_result.csv";
+    try // try to create a dir if it doesn't exists
+    {
+        std::filesystem::path dir = RES_PATH;;
+
+        std::filesystem::create_directories(dir);
+    }
+    catch(std::exception& e)
+    {
+        std::cout << e.what();
+        return;
+    }
+
+    if(algorithm_name == "bb")
+        search_analyzer(algorithm_type::BINARY, std::string(filename), &edb::search::binary_search);
+    if(algorithm_name == "ss")
+        search_analyzer(algorithm_type::LINEAR, std::string(filename), &edb::search::sequencial_search);
+}
+
+void edb::search_analyzer(edb::algorithm_type t, const std::string& filename, const std::function<int(std::vector<int>&, int)>& search_algorithm)
+{
+    std::cout << filename;
+    int rep; 
+    //sets the repetitions to be way longer if is the binary search
+    if(t == algorithm_type::BINARY) rep = 2000000;
+    else rep = 150;
+
+    std::ofstream res_csv(RES_PATH + std::string("/") + filename);
+    res_csv << "array size, time(in seconds)" << std::endl;
+
+    for(int n = 1000000 ; n < 15000000; n*=1.5f)
+    {
+        auto total_duration = std::chrono::steady_clock::duration::zero();
+        std::vector<int> arr = edb::vec_setup(n);
+        std::sort(arr.begin(), arr.end());
+
+        for(int j = 0; j < rep; ++j)
+        {
+            auto start = std::chrono::steady_clock::now();
+            search_algorithm(arr, n);
+            auto end = std::chrono::steady_clock::now();
+
+            total_duration += (end - start);
+        }
+        auto average_duration = total_duration / rep;
+
+        auto average_ns = std::chrono::duration_cast<std::chrono::nanoseconds>(average_duration);  
+
+        std::chrono::duration<double> average_s = average_duration;
+
+        res_csv << n << "," << std::fixed << std::setprecision(10) << average_s.count()<< std::endl;
+    }
+}
+
+std::vector<int> edb::vec_setup(int n)
+{
+    std::vector<int> random_vec(n);
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> distrib(1, n - 1);
+
+    std::generate(random_vec.begin(), random_vec.end(), [&](){ return distrib(gen);});
+
+    return random_vec;
+}
