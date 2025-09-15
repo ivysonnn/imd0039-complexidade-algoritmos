@@ -38,7 +38,7 @@ Para a execução do projeto, você deverá ter os seguintes componentes instala
        cmake ..
        
        # Compile o projeto
-       cmake --build
+       cmake --build .
 
 
 ## </> Modo de uso
