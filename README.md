@@ -38,7 +38,7 @@ Para a execução do projeto, você deverá ter os seguintes componentes instala
        cmake ..
        
        # Compile o projeto
-       cmake --build
+       cmake --build .
 
 
 ## </> Modo de uso
@@ -68,6 +68,6 @@ Chistian Daniel - **[@ChistianDPSilva](https://github.com/ChistianDPSilva)**
 
 Ivyson Lucas - **[@ivysonnn](https://github.com/ivysonnn)**
 
-## Liscença
+## Licença
 
 MIT License - **[LICENSE](https://github.com/ivysonnn/imd0039-complexidade-algoritmos/blob/main/LICENSE)**
