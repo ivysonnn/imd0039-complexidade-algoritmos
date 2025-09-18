@@ -27,5 +27,6 @@ namespace edb
 
     void run_analysis(std::string& algorithm_name);
     void search_analyzer(algorithm_type t,const std::string& filename, const std::function<int(std::vector<int>&, int)>& search_algorithm);
+    void sort_analyzer(algorithm_type t, const std::string& filename, const std::function<void(std::vector<int>&, int, int)>& sort_algorithm);
     std::vector<int> vec_setup(int n);
 }

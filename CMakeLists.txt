@@ -36,6 +36,7 @@ set(SOURCES
     ${source_dir}/src/bubblesort.cpp
     ${source_dir}/src/sequencial_search.cpp
     ${source_dir}/src/analysis.cpp
+    ${source_dir}/src/dummy_functions.cpp
     ${source_dir}/src/usage.cpp
 )
 
