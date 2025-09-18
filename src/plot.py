@@ -1,99 +1,82 @@
-import math
-import csv
+import sys
 import pandas as pd
 import matplotlib.pyplot as plt
 
+def plot_analysis_from_csv(algorithm_name: str):
+    """
+    Plota os dados de análise de tempo de execução de um algoritmo a partir de um arquivo CSV.
 
-def calculate_complexities(n: int) -> dict:
-        
-    log_n = math.log2(n)
-    n_log_n = n * log_n
-    n_squared = n ** 2
-    #n_cubed = n ** 3
-    #two_to_n = 2 ** n
-    #n_factorial = math.factorial(n)
+    Args:
+        algorithm_name (str): A sigla do algoritmo (ex: 'qs', 'bs', 'bb', 'ss').
+    """
+    file_path = f"../results/{algorithm_name}_result.csv"
+    plot_file_name = f"../results/{algorithm_name}_plot.png"
 
-    return {
-        "O(log n)": log_n,
-        "O(n)": n,
-        "O(n log n)": n_log_n,
-        "O(n^2)": n_squared,
-        #"O(n^3)": n_cubed,
-        #"O(2^n)": two_to_n,
-        #"O(n!)": n_factorial
-    }
-
-
-#--------------------------------------------------------------
-
-def plot_complexities_from_csv(file_name: str = "complexidades.csv"):
-  
     try:
         # Carrega os dados do arquivo CSV
-        df = pd.read_csv(file_name)
+        df = pd.read_csv(file_path)
+
+        print(f"Dados do arquivo '{file_path}' carregados com sucesso.")
         
-        print(f"Dados do arquivo '{file_name}' carregados com sucesso.")
-        print("\nInformações do DataFrame:")
-        df.info()
-        
+        # Renomeia as colunas para facilitar o acesso
+        df.columns = ['n', 'time_measured', 'time_log_n', 'time_n', 'time_n_log_n', 'time_n_2', 'time_n_3']
+
+        # --- Normalização das Curvas Teóricas ---
+        # Para comparar visualmente, ajustamos a escala das curvas teóricas
+        # para que o primeiro ponto delas coincida com o primeiro ponto do tempo medido.
+        # Isso é feito calculando uma constante 'c' tal que: c * f(n_inicial) = T(n_inicial)
+        if not df.empty:
+            # Evita divisão por zero se o tempo medido for muito pequeno
+            if df['time_log_n'].iloc[0] > 0:
+                df['time_log_n'] *= (df['time_measured'].iloc[0] / df['time_log_n'].iloc[0])
+            if df['time_n'].iloc[0] > 0:
+                df['time_n'] *= (df['time_measured'].iloc[0] / df['time_n'].iloc[0])
+            if df['time_n_log_n'].iloc[0] > 0:
+                df['time_n_log_n'] *= (df['time_measured'].iloc[0] / df['time_n_log_n'].iloc[0])
+            if df['time_n_2'].iloc[0] > 0:
+                df['time_n_2'] *= (df['time_measured'].iloc[0] / df['time_n_2'].iloc[0])
+            if df['time_n_3'].iloc[0] > 0:
+                df['time_n_3'] *= (df['time_measured'].iloc[0] / df['time_n_3'].iloc[0])
+
         # Criar uma figura e um subplot
         fig, ax1 = plt.subplots(figsize=(12, 8))
 
-        # Plot das complexidades
-        ax1.plot(df['n'], df['O(log n)'], label=r'$O(\log n)$')
-        ax1.plot(df['n'], df['O(n)'], label=r'$O(n)$')
-        ax1.plot(df['n'], df['O(n log n)'], label=r'$O(n \log n)$')
-        ax1.plot(df['n'], df['O(n^2)'], label=r'$O(n^2)$')
-        #ax1.plot(df['n'], df['O(n^3)'], label=r'$O(n^3)$') # Para n > 5, as próximas linhas tornão o gráfico ilegível
-        #ax1.plot(df['n'], df['O(2^n)'], label=r'$O(2^n)$')
-        #ax1.plot(df['n'], df['O(n!)'], label=r'$O(n!)$')
-        ax1.set_xlabel(r'Tamanho da Entrada ($n$)')
-        ax1.set_ylabel('Número de Operações (Escala)')
-        ax1.set_title(r'Comparação de Complexidade de Algoritmos', fontsize=16)
+        # Plot dos dados medidos e das curvas teóricas
+        ax1.plot(df['n'], df['time_measured'], marker='o', linestyle='-', label=f'Tempo Medido ({algorithm_name.upper()})', zorder=10)
+        ax1.plot(df['n'], df['time_log_n'], linestyle='--', label='Referência O(log n)')
+        ax1.plot(df['n'], df['time_n'], linestyle='--', label='Referência O(n)')
+        ax1.plot(df['n'], df['time_n_log_n'], linestyle='--', label='Referência O(n log n)')
+        ax1.plot(df['n'], df['time_n_2'], linestyle='--', label='Referência O(n^2)')
+        ax1.plot(df['n'], df['time_n_3'], linestyle='--', label='Referência O(n^3)')
+
+        # >>> MELHORIA: Usar escala logarítmica para ambos os eixos <<<
+        ax1.set_xscale('log')
+        ax1.set_yscale('log')
+
+        ax1.set_xlabel('Tamanho da Entrada (n)')
+        ax1.set_ylabel('Tempo Médio de Execução (segundos)')
+        ax1.set_title(f'Análise de Desempenho do Algoritmo: {algorithm_name.upper()}', fontsize=16)
         ax1.grid(True)
-        ax1.legend()       
-        
+        ax1.legend()
+
         plt.tight_layout(rect=[0, 0.03, 1, 0.95])
-        
+
         # Salva o gráfico em um arquivo PNG
-        plot_file_name = 'complexity_plot_from_csv.png'
         plt.savefig(plot_file_name)
         print(f"\nGráfico salvo com sucesso em '{plot_file_name}'")
+        plt.show()
 
     except FileNotFoundError:
-        print(f"Erro: O arquivo '{file_name}' não foi encontrado.")
-        print("Certifique-se de que o arquivo CSV esteja no mesmo diretório do script.")
+        print(f"Erro: O arquivo '{file_path}' não foi encontrado.")
+        print(f"Execute a análise para '{algorithm_name}' primeiro (ex: ./algorithms-complexity -{algorithm_name}).")
     except Exception as e:
         print(f"Ocorreu um erro: {e}")
 
-# -------------------------------------------------------------------------------
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Uso: python3 plot.py <sigla_do_algoritmo>")
+        print("Exemplo: python3 plot.py bb")
+        sys.exit(1)
 
-# Define o nome do arquivo CSV e os cabeçalhos
-file_name = "complexidades.csv"
-headers = ['n', 'O(log n)', 'O(n)', 'O(n log n)', 'O(n^2)', 'O(n^3)', 'O(2^n)', 'O(n!)']
-
-# Define o intervalo de valores de n
-n_values = range(1, 11) 
-
-# Abre o arquivo CSV no modo de escrita ('w')
-with open(file_name, 'w', newline='') as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=headers)
-    
-    # Escreve o cabeçalho no arquivo
-    writer.writeheader()
-    
-    # Itera sobre cada valor de n no intervalo
-    for n in n_values:
-        # Calcula as complexidades para o n atual
-        complexities = calculate_complexities(n)
-        print(f"\n{complexities}")
-        
-        # Cria um dicionário para a linha do CSV, incluindo o valor de n
-        row_data = {'n': n, **complexities}
-        
-        # Escreve a linha no arquivo
-        writer.writerow(row_data)
-
-print(f"Dados de complexidade salvos com sucesso em '{file_name}'")
-
-plot_complexities_from_csv()
+    algorithm_to_plot = sys.argv[1]
+    plot_analysis_from_csv(algorithm_to_plot)
