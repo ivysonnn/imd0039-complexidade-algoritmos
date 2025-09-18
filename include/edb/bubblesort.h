@@ -1,13 +1,14 @@
-#pragma once
+#ifndef EDB_BUBBLESORT_H
+#define EDB_BUBBLESORT_H
 
-#include <iostream>
 #include <vector>
-#include <utility>
 
 namespace edb
 {
     namespace sort
     {
-        void bubblesort(std::vector<int>& arr);
+        void bubblesort(std::vector<int>& arr, int low, int high);
     }
 }
+
+#endif
