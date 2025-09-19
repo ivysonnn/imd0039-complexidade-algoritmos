@@ -4,7 +4,7 @@ Projeto desenvolvido para a disciplina IMD0039 - Estrutura de Dados II, com o ob
 
 ## 📖 Sobre o Projeto
 
-Este projeto consiste em um programa desenvolvido inteiramente em **C++** para analisar e comparar o desempenho de algoritmos. Ele executa os algoritmos com uma variedade de tamanhos de entrada, mede o tempo de execução para cada caso e, ao final, gera gráficos de visualização.
+Este projeto consiste em um programa desenvolvido em **C++** para analisar e comparar o desempenho de algoritmos e Python para a plotagem do gráficos. Ele executa os algoritmos com uma variedade de tamanhos de entrada, mede o tempo de execução para cada caso e também gera gráficos de visualização.
 
 Para a plotagem dos gráficos, o projeto utiliza a biblioteca Python **[matplotlib](https://github.com/matplotlib/matplotlib)**.
 
