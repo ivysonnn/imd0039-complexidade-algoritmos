@@ -39,8 +39,25 @@ int main(int argc, char *argv[])
         edb::run_analysis(alg_name);
     }
     if(argc == 3) // for ploting the charts
-    {
-        
+    {      
+        if (alg_name == "pl") 
+        {
+            std::string target_alg = argv[2];
+
+            if(target_alg != "qs" && target_alg != "bb" && target_alg != "bs" && target_alg != "ss") 
+            {
+                std::cout << "Invalid target for plotting: " << target_alg << std::endl << std::endl;
+                edb::cli::print_usage(program);
+            }
+
+            std::string command = "python3 ../src/plot.py " + target_alg;
+            system(command.c_str());
+        } else 
+        {
+            std::cout << "Invalid arguments for plotting." << std::endl << std::endl;
+            edb::cli::print_usage(program);
+            return 1;
+        }
     }
   return 0;
 } 
