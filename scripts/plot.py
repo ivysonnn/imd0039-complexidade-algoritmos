@@ -56,7 +56,7 @@ def plot_analysis_from_csv(algorithm_name: str):
 
         ax1.set_xlabel('Tamanho da Entrada (n)')
         ax1.set_ylabel('Tempo de Execução Normalizado')
-        ax1.set_title(f'Análise de Desempenho (Escala Log-Log): {algorithm_name.upper()}', fontsize=16)
+        ax1.set_title(f'Análise de Desempenho do algoritmo: {algorithm_name.upper()}', fontsize=16)
         ax1.grid(True, which="both", ls="-", linewidth=1)
         ax1.legend()
 
