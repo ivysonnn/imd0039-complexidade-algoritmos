@@ -7,6 +7,15 @@ def plot_analysis_from_csv(algorithm_name: str):
     file_path = f"../results/{algorithm_name}_result.csv"
     plot_file_name = f"../results/{algorithm_name}_plot_loglog.png" # Nome de arquivo diferente
 
+    if algorithm_name == "bb":
+        algorithm_name = "Busca Binária"
+    elif algorithm_name == "ss":
+        algorithm_name = "Busca Sequencial"
+    elif algorithm_name == "bs":
+        algorithm_name = "BubbleSort"
+    elif algorithm_name == "qs":
+        algorithm_name = "QuickSort"
+
     try:
         df = pd.read_csv(file_path, usecols=[0, 1], header=None, names=['n', 'time_measured'])
         print(f"Dados do arquivo '{file_path}' carregados com sucesso.")
@@ -56,7 +65,7 @@ def plot_analysis_from_csv(algorithm_name: str):
 
         ax1.set_xlabel('Tamanho da Entrada (n)')
         ax1.set_ylabel('Tempo de Execução Normalizado')
-        ax1.set_title(f'Análise de Desempenho do algoritmo: {algorithm_name.upper()}', fontsize=16)
+        ax1.set_title(f'Análise de Desempenho do Algoritmo {algorithm_name}', fontsize=16)
         ax1.grid(True, which="both", ls="-", linewidth=1)
         ax1.legend()
 
