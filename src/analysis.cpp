@@ -12,8 +12,7 @@ void edb::run_analysis(std::string& algorithm_name)
     try // try to create a dir if it doesn't exists
     {
         std::filesystem::path dir = RES_PATH;;
-
-        std::filesystem::create_directories(dir);
+        if(!std::filesystem::exists(RES_PATH)) std::filesystem::create_directories(dir);
     }
     catch(std::exception& e)
     {
@@ -37,12 +36,12 @@ void edb::search_analyzer(edb::algorithm_type t, const std::string& filename, co
     int rep; 
     //sets the repetitions to be way longer if is the binary search
     if(t == algorithm_type::BINARY) rep = 2000000;
-    else rep = 150;
+    else rep = 500;
 
     std::ofstream res_csv(RES_PATH + std::string("/") + filename);
     res_csv << "n,time_measured,time_log_n,time_n,time_n_log_n,time_n_2,time_n_3" << std::endl;
 
-    for(int n = 1000000 ; n < 15000000; n*=1.5f)
+    for(int n = 10000 ; n < 100001; n*=2)
     {
         auto total_duration = std::chrono::steady_clock::duration::zero();
         std::vector<int> arr = edb::vec_setup(n);
@@ -84,12 +83,12 @@ void edb::search_analyzer(edb::algorithm_type t, const std::string& filename, co
 void edb::sort_analyzer(edb::algorithm_type t, const std::string& filename, const std::function<void(std::vector<int>&, int, int)>& sort_algorithm)
 {
     std::cout << filename << std::endl;
-    int rep = 17;
+    int rep = 50;
 
     std::ofstream res_csv(RES_PATH + std::string("/") + filename);
     res_csv << "n,time_measured,time_log_n,time_n,time_n_log_n,time_n_2,time_n_3" << std::endl;
 
-    for(int n = 100 ; n <=5000; n += 100)
+    for(int n = 1000 ; n <=10001; n *= 2)
     {
         auto total_duration = std::chrono::steady_clock::duration::zero();
 
