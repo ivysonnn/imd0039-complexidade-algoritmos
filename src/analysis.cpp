@@ -65,7 +65,11 @@ void edb::search_analyzer(edb::algorithm_type t, const std::string& filename, co
 void edb::sort_analyzer(edb::algorithm_type t, const std::string& filename, const std::function<void(std::vector<int>&, int, int)>& sort_algorithm)
 {
     std::cout << filename << std::endl;
-    int rep = 50;
+    int rep;
+    if(t == algorithm_type::BUBBLE)
+        rep = 50;
+    else
+        rep = 200;
 
     std::ofstream res_csv(RES_PATH + std::string("/") + filename);
     res_csv << "n,time_measured" << std::endl;
