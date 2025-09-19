@@ -1,5 +1,4 @@
 #include <edb/analysis.h>
-#include <edb/dummy_functions.h> // Inclui as novas funções de referência
 #include <cmath>
 
 #define RES_PATH "../results/"
@@ -39,7 +38,7 @@ void edb::search_analyzer(edb::algorithm_type t, const std::string& filename, co
     else rep = 500;
 
     std::ofstream res_csv(RES_PATH + std::string("/") + filename);
-    res_csv << "n,time_measured,time_log_n,time_n,time_n_log_n,time_n_2,time_n_3" << std::endl;
+    res_csv << "n,time_measured" << std::endl;
 
     for(int n = 10000 ; n < 100001; n*=2)
     {
@@ -59,24 +58,7 @@ void edb::search_analyzer(edb::algorithm_type t, const std::string& filename, co
 
         std::chrono::duration<double> average_s = average_duration;
 
-        // Mede o tempo das funções de referência
-        auto measure_dummy = [&](auto dummy_func) {
-            auto start = std::chrono::steady_clock::now();
-            dummy_func(n);
-            auto end = std::chrono::steady_clock::now();
-            return std::chrono::duration<double>(end - start).count();
-        };
-
-        double time_log_n = measure_dummy(edb::analysis::dummy_log_n);
-        double time_n = measure_dummy(edb::analysis::dummy_n);
-        double time_n_log_n = measure_dummy(edb::analysis::dummy_n_log_n);
-        double time_n_2 = measure_dummy(edb::analysis::dummy_n_2);
-        double time_n_3 = measure_dummy(edb::analysis::dummy_n_3);
-
-        res_csv << n << "," << std::fixed << std::setprecision(10) << average_s.count()
-                << "," << time_log_n << "," << time_n
-                << "," << time_n_log_n << "," << time_n_2 << "," << time_n_3
-                << std::endl;
+        res_csv << n << "," << std::fixed << std::setprecision(10) << average_s.count() << std::endl;
     }
 }
 
@@ -86,7 +68,7 @@ void edb::sort_analyzer(edb::algorithm_type t, const std::string& filename, cons
     int rep = 50;
 
     std::ofstream res_csv(RES_PATH + std::string("/") + filename);
-    res_csv << "n,time_measured,time_log_n,time_n,time_n_log_n,time_n_2,time_n_3" << std::endl;
+    res_csv << "n,time_measured" << std::endl;
 
     for(int n = 1000 ; n <=10001; n *= 2)
     {
@@ -104,24 +86,7 @@ void edb::sort_analyzer(edb::algorithm_type t, const std::string& filename, cons
         auto average_duration = total_duration / rep;
         std::chrono::duration<double> average_s = average_duration;
 
-        // Mede o tempo das funções de referência
-        auto measure_dummy = [&](auto dummy_func) {
-            auto start = std::chrono::steady_clock::now();
-            dummy_func(n);
-            auto end = std::chrono::steady_clock::now();
-            return std::chrono::duration<double>(end - start).count();
-        };
-
-        double time_log_n = measure_dummy(edb::analysis::dummy_log_n);
-        double time_n = measure_dummy(edb::analysis::dummy_n);
-        double time_n_log_n = measure_dummy(edb::analysis::dummy_n_log_n);
-        double time_n_2 = measure_dummy(edb::analysis::dummy_n_2);
-        double time_n_3 = measure_dummy(edb::analysis::dummy_n_3);
-
-        res_csv << n << "," << std::fixed << std::setprecision(10) << average_s.count()
-                << "," << time_log_n << "," << time_n
-                << "," << time_n_log_n << "," << time_n_2 << "," << time_n_3
-                << std::endl;
+        res_csv << n << "," << std::fixed << std::setprecision(10) << average_s.count() << std::endl;
     }
 }
 
