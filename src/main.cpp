@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
                 edb::cli::print_usage(program);
             }
 
-            std::string command = "python3 ../src/plot.py " + target_alg;
+            std::string command = "python3 ../scripts/plot.py " + target_alg;
             system(command.c_str());
         } else 
         {
