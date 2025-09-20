@@ -40,7 +40,7 @@ void edb::search_analyzer(edb::algorithm_type t, const std::string& filename, co
     std::ofstream res_csv(RES_PATH + std::string("/") + filename);
     res_csv << "n,time_measured" << std::endl;
 
-    for(int n = 10000 ; n < 100001; n*=2)
+    for(int n = 100000 ; n < 8000001; n*=2)
     {
         auto total_duration = std::chrono::steady_clock::duration::zero();
         std::vector<int> arr = edb::vec_setup(n);
@@ -65,16 +65,25 @@ void edb::search_analyzer(edb::algorithm_type t, const std::string& filename, co
 void edb::sort_analyzer(edb::algorithm_type t, const std::string& filename, const std::function<void(std::vector<int>&, int, int)>& sort_algorithm)
 {
     std::cout << filename << std::endl;
-    int rep;
+    int rep, n, end;
     if(t == algorithm_type::BUBBLE)
-        rep = 50;
+    {
+        rep = 5;
+        n = 2000;
+        end = 16001;
+    }
     else
+    {
         rep = 200;
+        n = 100000;
+        end = 80001;
+    }
+
 
     std::ofstream res_csv(RES_PATH + std::string("/") + filename);
     res_csv << "n,time_measured" << std::endl;
 
-    for(int n = 1000 ; n <=10001; n *= 2)
+    for(; n <= end; n *= 2)
     {
         auto total_duration = std::chrono::steady_clock::duration::zero();
 
