@@ -73,7 +73,7 @@ void edb::sort_analyzer(edb::algorithm_type t, const std::string& filename, cons
     else
     {
         rep = 200;
-        n = 100000;
+        n = 10000;
         nend = 80001;
     }
 
