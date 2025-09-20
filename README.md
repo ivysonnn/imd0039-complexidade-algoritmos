@@ -23,7 +23,7 @@ Para a execução do projeto, você deverá ter os seguintes componentes instala
  - **Clone o repositório**
     
    ``` Bash 
-       git clone https://github.com/seu-usuario/imd0039-complexidade-algoritmos.git 
+       git clone https://github.com/ivysonnn/imd0039-complexidade-algoritmos.git 
        
        cd imd0039-complexidade-algoritmos
 - **Compile o projeto com CMake**
