@@ -35,8 +35,17 @@ int main(int argc, char *argv[])
             std::cout << "Invalid argument" << std::endl << std::endl;
             edb::cli::print_usage(program);
         }
-
+        auto duration = std::chrono::steady_clock::duration::zero();
+        auto start = std::chrono::steady_clock::now();
         edb::run_analysis(alg_name);
+        auto end = std::chrono::steady_clock::now();
+
+        duration = (end - start);
+        auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+
+        std::cout << "Análise realizada com sucesso! " << std::endl;
+        std::cout << "Tempo total de execução: " << milliseconds <<"ms" << std::endl << std::endl;
+        std::cout << "Rode o comando '" << program << " -pl " << alg_name << "' para plotar o gráfico da análise." << std::endl;
     }
     if(argc == 3) // for ploting the charts
     {      
